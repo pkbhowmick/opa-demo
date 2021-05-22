@@ -1,10 +1,11 @@
-package main
+package main_test
 
 import (
 	"io/ioutil"
 	"os"
 	"testing"
 
+	opa "github.com/pkbhowmick/opa-demo"
 	"github.com/stretchr/testify/require"
 )
 
@@ -87,7 +88,7 @@ func TestCheckPolicy(t *testing.T) {
 		err := ioutil.WriteFile(tmpFile, o.JsonInput, 0644)
 		require.NoError(t, err)
 
-		rs, err := CheckPolicy(o.RegoQuery, o.RegoFilePath, tmpFile)
+		rs, err := opa.CheckPolicy(o.RegoQuery, o.RegoFilePath, tmpFile)
 		require.NoError(t, err)
 
 		require.Equal(t, o.ExpectedResult, rs)

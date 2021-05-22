@@ -1,4 +1,5 @@
-# opa-deep-dive
+# opa-demo
+
 
 ## Resources
 - [OPA Official Doc](https://www.openpolicyagent.org/docs/latest/)

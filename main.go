@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 
 	"github.com/open-policy-agent/opa/rego"
 )
@@ -62,7 +63,7 @@ func main() {
 
 	rs, err := CheckPolicy(regoQuery, regoFilePath, inputFilePath)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 
 	if rs.(bool) {
