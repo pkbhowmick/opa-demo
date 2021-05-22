@@ -1,3 +1,4 @@
 {
-  "message" : "hello"
+  "message" : "hello",
+  "statusCode": 200
 }
