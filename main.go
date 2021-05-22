@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/open-policy-agent/opa/rego"
 	"io/ioutil"
-	"log"
+
+	"github.com/open-policy-agent/opa/rego"
 )
 
 var (
@@ -15,6 +15,42 @@ var (
 	regoFilePath  string
 	inputFilePath string
 )
+
+func CheckPolicy(regoQuery, regoFilePath, inputFilePath string) (interface{}, error) {
+	ctx := context.Background()
+
+	r := rego.New(
+		rego.Query(fmt.Sprintf("x = %s", regoQuery)),
+		rego.Load([]string{regoFilePath}, nil))
+
+	query, err := r.PrepareForEval(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	bs, err := ioutil.ReadFile(inputFilePath)
+	if err != nil {
+		return nil, err
+	}
+
+	var input interface{}
+
+	if err := json.Unmarshal(bs, &input); err != nil {
+		return nil, err
+	}
+
+	rs, err := query.Eval(ctx, rego.EvalInput(input))
+	if err != nil {
+		return nil, err
+	}
+
+	//fmt.Println(rs)
+
+	if len(rs) > 0 {
+		return rs[0].Bindings["x"], nil
+	}
+	return false, nil
+}
 
 func main() {
 	flag.StringVar(&regoQuery, "query", "data.example.hello", "Rego query for evaluation")
@@ -24,36 +60,12 @@ func main() {
 
 	fmt.Println(regoQuery, regoFilePath, inputFilePath)
 
-	ctx := context.Background()
-
-	r := rego.New(
-		rego.Query(fmt.Sprintf("x = %s", regoQuery)),
-		rego.Load([]string{regoFilePath}, nil))
-
-	query, err := r.PrepareForEval(ctx)
+	rs, err := CheckPolicy(regoQuery, regoFilePath, inputFilePath)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
 	}
 
-	bs, err := ioutil.ReadFile(inputFilePath)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	var input interface{}
-
-	if err := json.Unmarshal(bs, &input); err != nil {
-		log.Fatalln(err)
-	}
-
-	rs, err := query.Eval(ctx, rego.EvalInput(input))
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	fmt.Println(rs)
-
-	if len(rs)>0 && rs[0].Bindings["x"].(bool) {
+	if rs.(bool) {
 		fmt.Println("Policy is maintained")
 	} else {
 		fmt.Println("Alert!!! Policy is not maintained")
