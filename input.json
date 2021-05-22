@@ -1,4 +1,40 @@
 {
   "message" : "hello",
-  "statusCode": 200
+  "statusCode": 200,
+  "networks": [
+    {
+      "id" : "net1",
+      "public": false
+    },
+    {
+      "id": "net2",
+      "public": true
+    },
+    {
+      "id" : "net3",
+      "public": false
+    },
+    {
+      "id" : "net4",
+      "public": false
+    }
+  ],
+  "dbQuery" : [
+    {
+      "qid" : "q1",
+      "execTime" : 5.123
+    },
+    {
+      "qid" : "q2",
+      "execTime" : 2.123
+    },
+    {
+      "qid" : "q3",
+      "execTime" : 7.123
+    },
+    {
+      "qid" : "q4",
+      "execTime" : 9.999
+    }
+  ]
 }

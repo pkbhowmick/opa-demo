@@ -51,7 +51,9 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if rs[0].Bindings["x"].(bool) {
+	fmt.Println(rs)
+
+	if len(rs)>0 && rs[0].Bindings["x"].(bool) {
 		fmt.Println("Policy is maintained")
 	} else {
 		fmt.Println("Alert!!! Policy is not maintained")
