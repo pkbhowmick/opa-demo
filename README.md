@@ -1,5 +1,19 @@
 # opa-demo
 
+## Check any policy using OPA Go library 
+- Example: ```$ go run main.go --query=data.example.no_slow_query --input=input.json --regofile=example.rego```
+
+
+## API Authorization using OPA
+
+- ```$ kubectl create configmap example-policy --from-file ./authz/authz.rego```
+- ```$ kubectl apply -f deploy/```
+- ```$ kubectl port-forward service/opa 8181:8181```
+- ```$ cd server```
+- ```$ go run main.go```  
+- ```$ curl --user alice:demo localhost:8081/salary/bob```  [forbidden]
+- ```$ curl --user alice:demo localhsot:8081/salary/alice``` [permitted]
+
 
 ## Resources
 - [OPA Official Doc](https://www.openpolicyagent.org/docs/latest/)
