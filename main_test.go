@@ -21,14 +21,14 @@ func TestCheckPolicy(t *testing.T) {
 
 	opts := []Options{
 		{
-			JsonInput: []byte(`{"dbQuery" : [
+			JsonInput: []byte(`{"statements" : [
 			{
 				"qid" : "q1",
-				"execTime" : 5.123
+				"max_time" : 5.123
 			},
 			{
 				"qid" : "q2",
-				"execTime" : 9.999
+				"max_time" : 9.999
 			}
 			]
 			}`),
@@ -37,14 +37,14 @@ func TestCheckPolicy(t *testing.T) {
 			ExpectedResult: true,
 		},
 		{
-			JsonInput: []byte(`{"dbQuery" : [
+			JsonInput: []byte(`{"statements" : [
 			{
 				"qid" : "q1",
-				"execTime" : 5.123
+				"max_time" : 5.123
 			},
 			{
 				"qid" : "q2",
-				"execTime" : 10.001
+				"max_time" : 10.001
 			}
 			]
 			}`),

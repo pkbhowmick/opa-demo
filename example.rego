@@ -28,5 +28,5 @@ no_slow_query {
 }
 
 any_slow_query {
-    input.dbQuery[_].execTime >= 10.0
+    input.statements[_].max_time >= 10.0
 }
