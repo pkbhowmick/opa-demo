@@ -32,7 +32,7 @@ func TestCheckPolicy(t *testing.T) {
 			}
 			]
 			}`),
-			RegoQuery:      "data.example.no_slow_query",
+			RegoQuery:      "data.example.no_slow_queries",
 			RegoFilePath:   "./example.rego",
 			ExpectedResult: true,
 		},
@@ -48,7 +48,7 @@ func TestCheckPolicy(t *testing.T) {
 			}
 			]
 			}`),
-			RegoQuery:      "data.example.no_slow_query",
+			RegoQuery:      "data.example.no_slow_queries",
 			RegoFilePath:   "./example.rego",
 			ExpectedResult: false,
 		},

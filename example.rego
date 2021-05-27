@@ -23,10 +23,18 @@ any_public_network {
     input.networks[_].public == true
 }
 
-no_slow_query {
- not any_slow_query
+no_slow_queries {
+ not any_slow_queries
 }
 
-any_slow_query {
+any_slow_queries {
     input.statements[_].max_time >= 10.0
+}
+
+no_slow_query {
+    not any_slow_query
+}
+
+any_slow_query{
+    input.max_time >= 10.0
 }
